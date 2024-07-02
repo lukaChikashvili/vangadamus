@@ -1,10 +1,14 @@
-import { useLoader } from '@react-three/fiber'
+import {  useFrame, useLoader } from '@react-three/fiber'
 import circle from '../assets/100-removebg-preview.png'
 import {  TextureLoader } from 'three'
 import { OrbitControls } from '@react-three/drei';
-import { Physics, RigidBody } from '@react-three/rapier';
+import { Physics, RapierRigidBody, RigidBody, vec3 } from '@react-three/rapier';
+import { useEffect, useRef } from 'react';
+
 
 const Scene = () => {
+
+ 
 
      const texture = useLoader(TextureLoader, circle);
 
@@ -12,19 +16,30 @@ const Scene = () => {
            return Math.floor(Math.random() * (max - min) + min);
 
     }
+ let rockRef = useRef<RapierRigidBody>(null);
+
+
+ useFrame(() => {
+    if(rockRef.current) {
+        const position = vec3(rockRef.current.translation());
+        console.log(position)
+    }
+ })
 
   return (
     <>
     <OrbitControls makeDefault />
-     <Physics>
+     <Physics debug>
         <RigidBody gravityScale={1}
                     restitution={1}
-                    friction={1.2}>
+                    friction={1.2}
+                    ref={rockRef}
+                    ccd = {true} >
        <mesh position={[
               randomPosition(-4, 4),
-              randomPosition(4, 10),
+              randomPosition(5, 10),
               randomPosition(-4, 4)
-         ]} scale={0.5}>
+         ]} scale={0.5}   >
           <icosahedronGeometry  />
           <meshStandardMaterial color = "red" />
        </mesh>
@@ -57,7 +72,7 @@ const Scene = () => {
         </RigidBody>
 
      <RigidBody type='fixed'>
-       <mesh receiveShadow position-y={ - 1.25 } >
+       <mesh receiveShadow position-y={ - 1.25 }>
             <boxGeometry args={ [ 10, 0.5, 10 ] } />
             <meshStandardMaterial  map = {texture} />
         </mesh>
