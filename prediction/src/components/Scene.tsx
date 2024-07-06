@@ -1,16 +1,16 @@
 import {useLoader } from '@react-three/fiber';
 
 import { TextureLoader, Vector3 } from 'three';
-import { Center, Html, OrbitControls, Stars, Text3D } from '@react-three/drei';
+import { OrbitControls, Stars, Text3D } from '@react-three/drei';
 import { Physics, RapierRigidBody, RigidBody, } from '@react-three/rapier';
 import { useRef, useState, useEffect } from 'react';
-import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
-import Interface from './Interface';
+//import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
+
 
 
 const Scene = () => {
 
-  const sun = useLoader(TextureLoader, sunImg);
+
 
   const randomPosition = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
@@ -19,8 +19,13 @@ const Scene = () => {
   let rockRef = useRef<RapierRigidBody>(null);
   let meshRef = useRef<any>(null);
 
-  const [number1, setNumber1] = useState(false);
-  const [initialPosition, setInitialPosition] = useState(new Vector3(0, 10, 0));
+  const [initialPosition, setInitialPosition] = useState(() => {
+    return new Vector3(
+      randomPosition(-4, 4),
+      randomPosition(5, 10),
+      randomPosition(-4, 4)
+    );
+  });
 
   useEffect(() => {
     const randomInitialPosition = new Vector3(
@@ -42,8 +47,8 @@ const Scene = () => {
       <Physics>
         <RigidBody
           gravityScale={1}
-          restitution={0.8}
-          friction={1}
+          restitution={1.2}
+          friction={1.2}
           ref={rockRef}
           position={initialPosition}
         >
@@ -53,33 +58,29 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <Html>
-          {number1 && (
-            <Interface text="Your wish will be fulfilled. You belong to those people who do not lose the pride and presence of the spirit and in the most difficult situations. Solving your problems are there because you are endurance and patience. You are waiting for success because you have confidence in yourself and others." />
-          )}
-        </Html>
+   
         <RigidBody type="fixed">
           <mesh position={[0, 1.5, -5.25]}>
             <boxGeometry args={[10, 5, 0.5]} />
-            <meshStandardMaterial color="transparent" map={sun} />
+            <meshStandardMaterial color="transparent" />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[0, 1.5, 5.25]}>
             <boxGeometry args={[10, 5, 0.5]} />
-            <meshStandardMaterial color="transparent" map={sun} />
+            <meshStandardMaterial color="transparent"  />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[-5.25, 1.5, 0]}>
             <boxGeometry args={[0.5, 5, 10]} />
-            <meshStandardMaterial color="transparent" map={sun} />
+            <meshStandardMaterial color="transparent"  />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[5.25, 1.5, 0]}>
             <boxGeometry args={[0.5, 5, 10]} />
-            <meshStandardMaterial color="transparent" map={sun} />
+            <meshStandardMaterial color="transparent" />
           </mesh>
         </RigidBody>
 
