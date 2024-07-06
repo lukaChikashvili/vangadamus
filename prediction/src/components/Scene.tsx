@@ -1,11 +1,20 @@
-import {useLoader } from '@react-three/fiber';
 
-import { TextureLoader, Vector3 } from 'three';
+
+import {  Vector3 } from 'three';
 import { OrbitControls, Stars, Text3D } from '@react-three/drei';
 import { Physics, RapierRigidBody, RigidBody, } from '@react-three/rapier';
 import { useRef, useState, useEffect } from 'react';
 //import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
 
+
+// detect collision
+const handleCollision = (event: any) => {
+   const { other } = event;
+
+   console.log(other.rigidBody.userData.number)
+
+
+}
 
 
 const Scene = () => {
@@ -48,9 +57,10 @@ const Scene = () => {
         <RigidBody
           gravityScale={1}
           restitution={1.2}
-          friction={1.2}
+          friction={1}
           ref={rockRef}
           position={initialPosition}
+          onCollisionEnter={handleCollision}
         >
           <mesh scale={0.4} ref={meshRef}>
             <icosahedronGeometry />
@@ -91,7 +101,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
        
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 21}}>
           <mesh receiveShadow position-y={-1}>
             <boxGeometry args={[3, 0.3, 2]} />
             <meshStandardMaterial color = "orange" />
@@ -112,7 +122,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 4}}>
           <mesh receiveShadow position = {[1.7, -1, -2]} >
             <boxGeometry args={[3.5, 0.3, 2]} />
             <meshStandardMaterial color = "#AF47D2" />
@@ -133,7 +143,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 17}}>
           <mesh receiveShadow position = {[-1.55, -1, -2]} >
             <boxGeometry args={[3, 0.3, 2]} />
             <meshStandardMaterial color = "#FF4191" />
@@ -155,7 +165,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 18}}>
           <mesh receiveShadow position = {[2.48, -1, 0]} >
             <boxGeometry args={[1.96, 0.3, 2]} />
             <meshStandardMaterial color = "#5B9A8B" />
@@ -177,7 +187,7 @@ const Scene = () => {
         </RigidBody>
 
         
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 14}}>
           <mesh receiveShadow position = {[4.2, -1, -2]} >
             <boxGeometry args={[1.5, 0.3, 2]} />
             <meshStandardMaterial color = "#19A7CE" />
@@ -199,7 +209,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 2}}>
           <mesh receiveShadow position = {[0.5, -1, -4]} >
             <boxGeometry args={[3, 0.3, 1.9]} />
             <meshStandardMaterial color = "#00ABB3" />
@@ -220,7 +230,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 6}}>
           <mesh receiveShadow position = {[3.5, -1, -4]} >
             <boxGeometry args={[3, 0.3, 1.9]} />
             <meshStandardMaterial color = "#F806CC" />
@@ -242,7 +252,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 15}}>
           <mesh receiveShadow position = {[4.2, -1, 0.5]} >
             <boxGeometry args={[1.5, 0.3, 3]} />
             <meshStandardMaterial color = "#E04D01" />
@@ -265,7 +275,7 @@ const Scene = () => {
 
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 3}}>
           <mesh receiveShadow position = {[-2.93, -1, -4]} >
             <boxGeometry args={[3.85, 0.3, 1.9]} />
             <meshStandardMaterial color = "#F05454" />
@@ -287,7 +297,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 13}}>
           <mesh receiveShadow position = {[-2.76, -1, 0]}>
             <boxGeometry args={[2.5, 0.3, 2]} />
             <meshStandardMaterial color = "#BA135D" />
@@ -310,7 +320,7 @@ const Scene = () => {
 
 
         
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 1}}>
           <mesh receiveShadow position = {[-3.96, -1, -2]} >
             <boxGeometry args={[1.8, 0.3, 2]} />
             <meshStandardMaterial color = "#32E0C4" />
@@ -331,7 +341,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 16}}>
           <mesh receiveShadow position = {[-1.5, -1, 2]}>
             <boxGeometry args={[2.5, 0.3, 2]} />
             <meshStandardMaterial color = "#FF9595" />
@@ -352,7 +362,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 7}}>
           <mesh receiveShadow position = {[1.25, -1, 2]}>
             <boxGeometry args={[3, 0.3, 2]} />
             <meshStandardMaterial color = "#7D5E2A" />
@@ -372,7 +382,7 @@ const Scene = () => {
            
           </mesh>
         </RigidBody>
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 9}}>
           <mesh receiveShadow position = {[3.13, -1, 2]}>
             <boxGeometry args={[0.64, 0.3, 2]} />
             <meshStandardMaterial color = "black" />
@@ -394,7 +404,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 11}}>
           <mesh receiveShadow position = {[4.2, -1, 3.46]} >
             <boxGeometry args={[1.5, 0.3, 2.93]} />
             <meshStandardMaterial color = "#9DC6A7" />
@@ -415,7 +425,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 19}}>
           <mesh receiveShadow position = {[1.9, -1, 3.97]}>
             <boxGeometry args={[3, 0.3, 1.9]} />
             <meshStandardMaterial color = "#C738BD" />
@@ -436,7 +446,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 5}}>
           <mesh receiveShadow position = {[-4.44, -1, 0]}>
             <boxGeometry args={[0.8, 0.3, 2]} />
             <meshStandardMaterial color = "#AF8F6F" />
@@ -457,7 +467,7 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 8}}>
           <mesh receiveShadow position = {[-3.8, -1, 2]}>
             <boxGeometry args={[2.05, 0.3, 2]} />
             <meshStandardMaterial color = "#7469B6" />
@@ -479,7 +489,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 10}}>
           <mesh receiveShadow position = {[-3.8, -1, 4]}>
             <boxGeometry args={[2.05, 0.3, 2]} />
             <meshStandardMaterial color = "#EBF400" />
@@ -501,7 +511,7 @@ const Scene = () => {
         </RigidBody>
 
         
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 12}}>
           <mesh receiveShadow position = {[-0.5, -1, 4]}>
             <boxGeometry args={[1.8, 0.3, 2]} />
             <meshStandardMaterial color = "#15F5BA" />
@@ -523,7 +533,7 @@ const Scene = () => {
         </RigidBody>
 
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" userData={{number: 20}}>
           <mesh receiveShadow position = {[-2.10, -1, 4]}>
             <boxGeometry args={[1.3, 0.3, 2]} />
             <meshStandardMaterial color = "#40A2E3" />
