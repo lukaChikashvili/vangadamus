@@ -7,18 +7,23 @@ import { useRef, useState, useEffect } from 'react';
 //import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
 
 
-// detect collision
-const handleCollision = (event: any) => {
-   const { other } = event;
-
-   console.log(other.rigidBody.userData.number)
 
 
-}
 
 
 const Scene = () => {
 
+  const [collidedNumber, setCollidedNumber] = useState<number | null>(null);
+
+  // detect collision
+  const handleCollision = (event: any) => {
+    const { other } = event;
+    const collidedNumber = other?.rigidBody.userData?.number;
+
+    if(collidedNumber) {
+      setCollidedNumber(collidedNumber)
+    }
+  };
 
 
   const randomPosition = (min: number, max: number) => {
@@ -57,7 +62,7 @@ const Scene = () => {
         <RigidBody
           gravityScale={1}
           restitution={1.2}
-          friction={1}
+          friction={0.5}
           ref={rockRef}
           position={initialPosition}
           onCollisionEnter={handleCollision}
@@ -114,9 +119,9 @@ const Scene = () => {
               bevelThickness={ 0.02 }
               bevelSize={ 0.02 }
               bevelOffset={ 0 }
-              bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
+              bevelSegments={ 5 } position={[-0.5, 0.2, 0]} >
                   21
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 21 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -137,7 +142,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   4
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 4 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -158,7 +163,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   17
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 17 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -180,7 +185,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   18
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 18 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -202,7 +207,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   14
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 14 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -224,7 +229,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   2
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 2 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -245,7 +250,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   6
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 6 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -267,7 +272,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   15
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 15 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -290,7 +295,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   3
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 3 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -312,7 +317,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   13
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 13 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -335,7 +340,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   1
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 1 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -356,7 +361,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   16
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 16 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -377,7 +382,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   7
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 7 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -397,7 +402,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   9
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 9 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -419,7 +424,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   11
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 11 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -440,7 +445,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   19
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 19 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -461,7 +466,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   5
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 5 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -482,7 +487,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   8
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 8 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
@@ -504,7 +509,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   10
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 10 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -526,7 +531,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   12
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 12 ? 'yellow' : 'white'}/>
              </Text3D>
            
           </mesh>
@@ -548,7 +553,7 @@ const Scene = () => {
               bevelOffset={ 0 }
               bevelSegments={ 5 } position={[-0.5, 0.2, 0]}>
                   20
-                  <meshStandardMaterial color="white" />
+                  <meshStandardMaterial color={collidedNumber === 20 ? 'yellow' : 'white'} />
              </Text3D>
            
           </mesh>
