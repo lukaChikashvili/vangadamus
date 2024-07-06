@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber"
 import Scene from "./components/Scene"
 import Lights from "./components/Lights"
-import Interface from "./components/Interface"
+
 
 
 function App() {
@@ -15,9 +15,7 @@ function App() {
 
  </Canvas>
 
- <div className="text">
-    <Interface />
- </div>
+
  </>
   )
 }
