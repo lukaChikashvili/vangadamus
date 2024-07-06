@@ -1,12 +1,16 @@
 
 
-import {  Vector3 } from 'three';
-import { OrbitControls, Stars, Text3D } from '@react-three/drei';
-import { Physics, RapierRigidBody, RigidBody, } from '@react-three/rapier';
+import {   Vector3 } from 'three';
+import { Html, OrbitControls, Stars, Text3D, useMatcapTexture } from '@react-three/drei';
+import { Physics,  RapierRigidBody, RigidBody,  } from '@react-three/rapier';
 import { useRef, useState, useEffect } from 'react';
+import sound from '../assets/mixkit-hitting-soccer-ball-2112.wav'
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three'
+
+
 //import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
-
-
+//import cubism from '../assets/background-with-colorful-squares-vector.jpg'
 
 
 
@@ -14,6 +18,12 @@ import { useRef, useState, useEffect } from 'react';
 const Scene = () => {
 
   const [collidedNumber, setCollidedNumber] = useState<number | null>(null);
+  const [showClose, setShowClose] = useState(false);
+
+
+  const [texture] = useMatcapTexture('7877EE_D87FC5_75D9C7_1C78C0', 256);
+
+  let audioRef = useRef<null>(null);
 
   // detect collision
   const handleCollision = (event: any) => {
@@ -22,7 +32,10 @@ const Scene = () => {
 
     if(collidedNumber) {
       setCollidedNumber(collidedNumber)
+      
     }
+
+ 
   };
 
 
@@ -41,14 +54,39 @@ const Scene = () => {
     );
   });
 
-  useEffect(() => {
-    const randomInitialPosition = new Vector3(
-        randomPosition(-4, 4),
-        randomPosition(5, 10),
-        randomPosition(-4, 4)
-      );
-      setInitialPosition(randomInitialPosition);
-  }, []);
+ const startRolling = () => {
+  const randomInitialPosition = new Vector3(
+    randomPosition(-4, 4),
+    randomPosition(5, 10),
+    randomPosition(-4, 4)
+  );
+  setInitialPosition(randomInitialPosition);
+
+
+
+ }
+
+ useFrame((state) => {
+  if(showClose) {
+    const bodyPosition: any = rockRef.current?.translation();
+   
+    const cameraPosition = new THREE.Vector3();
+    cameraPosition.copy(bodyPosition);
+    cameraPosition.z += 2;
+    cameraPosition.y += 2;
+
+    const cameraTarget = new THREE.Vector3();
+    cameraTarget.copy(bodyPosition);
+    cameraTarget.y += 0.25;
+
+   state.camera.position.copy(cameraPosition);
+   state.camera.lookAt(cameraTarget);
+   
+  }
+
+  
+    
+ })
 
 
 
@@ -56,7 +94,16 @@ const Scene = () => {
 
   return (
     <>
-      <OrbitControls makeDefault />
+ <Html>
+      <audio ref={audioRef}>
+        <source src={sound} type="audio/wav" />
+        <p>Your browser does not support the audio element.</p>
+      </audio>
+       <button onClick={startRolling}>start</button>
+       <button onClick={() => setShowClose(!showClose)}>camera angle</button>
+      </Html>
+
+      
       <Stars />
       <Physics>
         <RigidBody
@@ -77,25 +124,25 @@ const Scene = () => {
         <RigidBody type="fixed">
           <mesh position={[0, 1.5, -5.25]}>
             <boxGeometry args={[10, 5, 0.5]} />
-            <meshStandardMaterial color="transparent" />
+            <meshMatcapMaterial  matcap={texture} />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[0, 1.5, 5.25]}>
             <boxGeometry args={[10, 5, 0.5]} />
-            <meshStandardMaterial color="transparent"  />
+            <meshMatcapMaterial  matcap={texture} />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[-5.25, 1.5, 0]}>
             <boxGeometry args={[0.5, 5, 10]} />
-            <meshStandardMaterial color="transparent"  />
+            <meshMatcapMaterial  matcap={texture} />
           </mesh>
         </RigidBody>
         <RigidBody type="fixed">
           <mesh position={[5.25, 1.5, 0]}>
             <boxGeometry args={[0.5, 5, 10]} />
-            <meshStandardMaterial color="transparent" />
+            <meshMatcapMaterial  matcap={texture} />
           </mesh>
         </RigidBody>
 
@@ -105,6 +152,13 @@ const Scene = () => {
             <meshStandardMaterial  />
           </mesh>
         </RigidBody>
+
+        
+          <mesh receiveShadow position-y={4.25}>
+            <boxGeometry args={[9.9, 0.5, 10]} />
+            <meshMatcapMaterial  matcap={texture} />
+          </mesh>
+       
        
         <RigidBody type="fixed" userData={{number: 21}}>
           <mesh receiveShadow position-y={-1}>
