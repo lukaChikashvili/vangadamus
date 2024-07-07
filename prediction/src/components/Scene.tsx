@@ -67,23 +67,29 @@ const Scene = () => {
  }
 
  useFrame((state) => {
-  if(showClose) {
-    const bodyPosition: any = rockRef.current?.translation();
-   
-    const cameraPosition = new THREE.Vector3();
-    cameraPosition.copy(bodyPosition);
-    cameraPosition.z += 2;
-    cameraPosition.y += 2;
+  if (showClose && rockRef.current) {
+    const bodyPosition = rockRef.current.translation(); 
 
-    const cameraTarget = new THREE.Vector3();
-    cameraTarget.copy(bodyPosition);
-    cameraTarget.y += 0.25;
+    
+    const lerpFactor = 0.1;
 
-   state.camera.position.copy(cameraPosition);
-   state.camera.lookAt(cameraTarget);
+
+    const cameraPosition = state.camera.position.clone().lerp(
+      new THREE.Vector3(bodyPosition.x, bodyPosition.y + 2, bodyPosition.z + 2),
+      lerpFactor
+    );
+
+    const cameraTarget = state.camera.position.clone().lerp(
+      new THREE.Vector3(bodyPosition.x, bodyPosition.y + 0.25, bodyPosition.z),
+      lerpFactor
+    );
+
+
+    state.camera.position.copy(cameraPosition);
+    state.camera.lookAt(cameraTarget);
+  
    
   }
-
   
     
  })
@@ -94,6 +100,10 @@ const Scene = () => {
 
   return (
     <>
+    <OrbitControls makeDefault maxAzimuthAngle={Math.PI / 4} 
+                  minAzimuthAngle={-Math.PI / 4}
+                  maxPolarAngle={Math.PI / 2} 
+                  minPolarAngle={0}/>
  <Html>
       <audio ref={audioRef}>
         <source src={sound} type="audio/wav" />
