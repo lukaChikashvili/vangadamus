@@ -1,12 +1,16 @@
 
 
 import {   Vector3 } from 'three';
-import { Html, OrbitControls, Stars, Text3D, useMatcapTexture } from '@react-three/drei';
-import { Physics,  RapierRigidBody, RigidBody,  } from '@react-three/rapier';
-import { useRef, useState, useEffect } from 'react';
-import sound from '../assets/mixkit-hitting-soccer-ball-2112.wav'
+import {  Html, OrbitControls, Stars, Text3D, useMatcapTexture } from '@react-three/drei';
+import { Physics,  RapierRigidBody, RigidBody } from '@react-three/rapier';
+import {  useRef, useState } from 'react';
+//import sound from '../assets/mixkit-hitting-soccer-ball-2112.wav'
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three'
+import Layout from './Layout';
+import { meanings} from './Meanings'
+import Interface from './Interface';
+
 
 
 //import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
@@ -19,32 +23,45 @@ const Scene = () => {
 
   const [collidedNumber, setCollidedNumber] = useState<number | null>(null);
   const [showClose, setShowClose] = useState(false);
-
+  const [interfaceText, setInterfaceText] = useState<string | null>(null);
 
   const [texture] = useMatcapTexture('7877EE_D87FC5_75D9C7_1C78C0', 256);
 
-  let audioRef = useRef<null>(null);
+  const groundRef = useRef(null);
+  let rockRef = useRef<RapierRigidBody>(null);
+  let meshRef = useRef<any>(null);
 
   // detect collision
   const handleCollision = (event: any) => {
     const { other } = event;
     const collidedNumber = other?.rigidBody.userData?.number;
-
-    if(collidedNumber) {
-      setCollidedNumber(collidedNumber)
-      
-    }
+  
+    if (collidedNumber) {
+      setCollidedNumber(collidedNumber);
+    
+   
+        const foundMeaning = meanings.find((mean) => mean.number === collidedNumber);
+        if (foundMeaning) {
+           
+            setInterfaceText(foundMeaning.meaning);
+             
+        }
+      }
+    
+  
+  
+  };  
 
  
-  };
+
+
 
 
   const randomPosition = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min) + min);
   };
 
-  let rockRef = useRef<RapierRigidBody>(null);
-  let meshRef = useRef<any>(null);
+ 
 
   const [initialPosition, setInitialPosition] = useState(() => {
     return new Vector3(
@@ -61,7 +78,7 @@ const Scene = () => {
     randomPosition(-4, 4)
   );
   setInitialPosition(randomInitialPosition);
-
+  
 
 
  }
@@ -87,11 +104,12 @@ const Scene = () => {
 
     state.camera.position.copy(cameraPosition);
     state.camera.lookAt(cameraTarget);
-  
    
+
+    
   }
   
-    
+  
  })
 
 
@@ -100,18 +118,22 @@ const Scene = () => {
 
   return (
     <>
+
+    <Html wrapperClass='layout-container'>
+    
+    <div className="layout">
+  <Layout onStart={startRolling} changeCamera={() => setShowClose(!showClose)}/>
+</div>
+
+<div className='interface-container'>
+{interfaceText && <Interface text={interfaceText} />}
+</div>
+    </Html>
     <OrbitControls makeDefault maxAzimuthAngle={Math.PI / 4} 
                   minAzimuthAngle={-Math.PI / 4}
                   maxPolarAngle={Math.PI / 2} 
                   minPolarAngle={0}/>
- <Html>
-      <audio ref={audioRef}>
-        <source src={sound} type="audio/wav" />
-        <p>Your browser does not support the audio element.</p>
-      </audio>
-       <button onClick={startRolling}>start</button>
-       <button onClick={() => setShowClose(!showClose)}>camera angle</button>
-      </Html>
+
 
       
       <Stars />
@@ -156,8 +178,8 @@ const Scene = () => {
           </mesh>
         </RigidBody>
 
-        <RigidBody type="fixed">
-          <mesh receiveShadow position-y={-1.25}>
+        <RigidBody type="fixed" >
+          <mesh receiveShadow position-y={-1.25} ref = {groundRef}>
             <boxGeometry args={[9.9, 0.5, 10]} />
             <meshStandardMaterial  />
           </mesh>

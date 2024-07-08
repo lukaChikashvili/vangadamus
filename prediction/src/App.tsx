@@ -1,6 +1,8 @@
-import { Canvas } from "@react-three/fiber"
-import Scene from "./components/Scene"
-import Lights from "./components/Lights"
+
+import { Route, Routes } from "react-router-dom"
+import StartPage from "./components/StartPage"
+import CanvasPage from "./components/Canvas"
+
 
 
 
@@ -9,11 +11,12 @@ function App() {
 
   return (
     <>
- <Canvas>
-    <Scene />
-    <Lights />
+ 
 
- </Canvas>
+  <Routes>
+    <Route path="/" element = {<StartPage />}/>
+    <Route path="/canvas" element = {<CanvasPage />}/>
+  </Routes>
 
 
  </>
