@@ -4,17 +4,17 @@ import {   Vector3 } from 'three';
 import {  Html, OrbitControls, Stars, Text3D, useMatcapTexture } from '@react-three/drei';
 import { Physics,  RapierRigidBody, RigidBody } from '@react-three/rapier';
 import {  useRef, useState } from 'react';
-//import sound from '../assets/mixkit-hitting-soccer-ball-2112.wav'
+import sound from '../assets/mixkit-hitting-soccer-ball-2112.wav'
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three'
 import Layout from './Layout';
 import { meanings} from './Meanings'
 import Interface from './Interface';
+import { useNavigate } from 'react-router-dom';
 
 
 
-//import sunImg from '../assets/beautiful-sun-face-moon-phases_100410-432.avif';
-//import cubism from '../assets/background-with-colorful-squares-vector.jpg'
+
 
 
 
@@ -27,6 +27,8 @@ const Scene = () => {
 
   const [texture] = useMatcapTexture('7877EE_D87FC5_75D9C7_1C78C0', 256);
 
+  let navigate = useNavigate();
+
   const groundRef = useRef(null);
   let rockRef = useRef<RapierRigidBody>(null);
   let meshRef = useRef<any>(null);
@@ -38,6 +40,9 @@ const Scene = () => {
   
     if (collidedNumber) {
       setCollidedNumber(collidedNumber);
+
+      const audio = new Audio(sound);
+      audio.play();
     
    
         const foundMeaning = meanings.find((mean) => mean.number === collidedNumber);
@@ -113,7 +118,9 @@ const Scene = () => {
  })
 
 
-
+const quit = () => {
+  navigate('/')
+}
   
 
   return (
@@ -121,14 +128,19 @@ const Scene = () => {
 
     <Html wrapperClass='layout-container'>
     
-    <div className=" absolute p-12 left-96 ml-52 md:ml-0 md:left-0 " >
-  <Layout onStart={startRolling} changeCamera={() => setShowClose(!showClose)}/>
+    <div className=" absolute w-full p-12 left-96 ml-52 md:ml-0 md:left-0  " >
+  <Layout onStart={startRolling} changeCamera={() => setShowClose(!showClose)} logout={quit}/>
+  
 </div>
 
 <div className='interface-container sm:left-96 ml-96 '>
 {interfaceText && <Interface text={interfaceText} />}
 </div>
+
+
     </Html>
+
+    
     <OrbitControls makeDefault maxAzimuthAngle={Math.PI / 4} 
                   minAzimuthAngle={-Math.PI / 4}
                   maxPolarAngle={Math.PI / 2} 
@@ -140,15 +152,16 @@ const Scene = () => {
       <Physics>
         <RigidBody
           gravityScale={1}
-          restitution={1.2}
-          friction={0.5}
+          restitution={1}
+          friction={0.2}
           ref={rockRef}
           position={initialPosition}
           onCollisionEnter={handleCollision}
+          
         >
-          <mesh scale={0.4} ref={meshRef}>
+          <mesh scale={0.4} ref={meshRef} castShadow>
             <icosahedronGeometry />
-            <meshStandardMaterial color="red" />
+            <meshStandardMaterial flatShading color="red" />
           </mesh>
         </RigidBody>
 

@@ -13,6 +13,7 @@
     width: 100%;
     font-family: 'Mooli', sans-serif;
     user-select: none;
+    background-color: #191919;
 }
 
 
@@ -84,8 +85,6 @@
 .start, .rules {
     width: 100%;
     height: 100vh;
-    background-color: #312091;
-background-image: url(http://www.transparenttextures.com/patterns/gplay.png);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -135,3 +134,5 @@ background-image: url(http://www.transparenttextures.com/patterns/gplay.png);
     margin-left:180px;
   }
   }
+
+
