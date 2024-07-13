@@ -1,7 +1,7 @@
 
 import { Route, Routes, useNavigate } from "react-router-dom"
 import StartPage from "./components/StartPage"
-import CanvasPage from "./components/Canvas"
+import CanvasPage from "./components/CanvasPage"
 import Rules from "./components/Rules"
 import bgmusic from './assets/Classical Cinematic Mystery  Mystical Background Music for Video Projects.mp3'
 
