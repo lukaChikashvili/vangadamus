@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import Layout from './Layout';
 import { meanings} from './Meanings'
 import Interface from './Interface';
-import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -27,7 +27,7 @@ const Scene = ({quit}: {quit: () => void}) => {
 
   const [texture] = useMatcapTexture('7877EE_D87FC5_75D9C7_1C78C0', 256);
 
-  let navigate = useNavigate();
+  
 
   const groundRef = useRef(null);
   let rockRef = useRef<RapierRigidBody>(null);
