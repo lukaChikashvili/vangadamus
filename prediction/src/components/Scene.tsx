@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Scene = () => {
+const Scene = ({quit}: {quit: () => void}) => {
 
   const [collidedNumber, setCollidedNumber] = useState<number | null>(null);
   const [showClose, setShowClose] = useState(false);
@@ -118,9 +118,7 @@ const Scene = () => {
  })
 
 
-const quit = () => {
-  navigate('/')
-}
+
   
 
   return (

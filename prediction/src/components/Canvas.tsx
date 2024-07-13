@@ -3,11 +3,11 @@ import Scene from "./Scene"
 import Lights from "./Lights"
 
 
-const CanvasPage = () => {
+const CanvasPage = ({stopSound}: {stopSound: any}) => {
   return (
     <>
       <Canvas>
-    <Scene />
+    <Scene quit={stopSound}/>
     <Lights />
 
  </Canvas>

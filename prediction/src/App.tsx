@@ -7,15 +7,28 @@ import bgmusic from './assets/Classical Cinematic Mystery  Mystical Background M
 
 
 
+
 function App() {
   let navigate = useNavigate();
 
- 
+
+  const audio = new Audio(bgmusic);
   const handleSound = () => {
-    const audio = new Audio(bgmusic);
+   
     audio.play();
-     navigate('/rules')
+     navigate('/rules');
+
+  
+
+   
   }
+
+  const quit = () => {
+    navigate('/')
+    audio.pause();
+  }
+
+
 
   return (
     <>
@@ -23,7 +36,7 @@ function App() {
 
   <Routes>
     <Route path="/" element = {<StartPage onClick={handleSound} />}/>
-    <Route path="/canvas" element = {<CanvasPage />}/>
+    <Route path="/canvas" element = {<CanvasPage stopSound={quit} />}/>
     <Route path="/rules" element = {<Rules />}/>
   </Routes>
 
