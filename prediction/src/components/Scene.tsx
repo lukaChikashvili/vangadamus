@@ -121,11 +121,11 @@ const Scene = () => {
 
     <Html wrapperClass='layout-container'>
     
-    <div className="layout">
+    <div className=" absolute p-12 left-96 ml-52 md:ml-0 md:left-0 " >
   <Layout onStart={startRolling} changeCamera={() => setShowClose(!showClose)}/>
 </div>
 
-<div className='interface-container'>
+<div className='interface-container sm:left-96 ml-96 '>
 {interfaceText && <Interface text={interfaceText} />}
 </div>
     </Html>

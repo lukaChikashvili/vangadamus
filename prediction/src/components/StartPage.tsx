@@ -7,7 +7,7 @@ const StartPage = () => {
 
   return (
     <div className="start">
-        <h1 className="title">Vangadamus</h1>
+        <h1 className="title text-5xl md:text-9xl ">Vangadamus</h1>
 
         <button className="enter" onClick={() => navigate('/rules')}>
            Enter the vangadamus 

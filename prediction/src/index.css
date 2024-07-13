@@ -30,14 +30,6 @@
 }
 
 
-.layout {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-    width: 100%;
-    padding: 20px;
-}
 
 .buttons {
     color: #fff;
@@ -83,7 +75,7 @@
     width: 90%;
     height: 90vh;
     
-    font-size: 2rem;
+    font-size: 1.5rem;
     z-index: -1;
 
    
@@ -103,7 +95,6 @@ background-image: url(http://www.transparenttextures.com/patterns/gplay.png);
 
 .title {
     color: #fff;
-    font-size: 11rem;
     text-shadow: -10px 9px  black;
     text-align: center;
     padding-top: 4rem;
@@ -126,15 +117,21 @@ background-image: url(http://www.transparenttextures.com/patterns/gplay.png);
     box-shadow: -4px 4px #FF4191;
 }
 
-.rules h2 {
-    width: 50%;
-    color: #fff;
-    text-shadow: -3px 3px black;
-    font-size: 2.5rem;
-    
-}
+
 
 .enter-width {
     width: 300px;
     font-family: 'DM Serif Text', sans-serif;
 }
+
+
+@media (max-width: 640px) {
+  .card {
+    width: 300px;
+    font-size: 17px;
+  }
+
+  .interface {
+    margin-left:180px;
+  }
+  }
