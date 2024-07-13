@@ -126,7 +126,7 @@ const Scene = ({quit}: {quit: () => void}) => {
 
     <Html wrapperClass='layout-container'>
     
-    <div className=" absolute w-full p-12 left-96 ml-52 md:ml-0 md:left-0  " >
+    <div className=" absolute w-full pt-16  left-52 ml-96 md:ml-0 md:left-0 md:pt-8 " >
   <Layout onStart={startRolling} changeCamera={() => setShowClose(!showClose)} logout={quit}/>
   
 </div>
